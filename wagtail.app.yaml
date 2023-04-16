@@ -1,0 +1,13 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: wagtail
+  annotations:
+    version: "latest"
+    description: "Wagtail - A Django content management system focused on flexibility and user experience wagtail.org"
+spec:
+  components:
+    - name: wagtail-dev
+      type: webservice
+      properties:
+        image: destructive21/wagtail-dev:latest
