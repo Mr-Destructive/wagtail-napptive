@@ -9,11 +9,12 @@ COPY . /app
 RUN python -m pip install --upgrade pip wheel build
 RUN pip install --no-cache-dir .[full]
 
-RUN wagtail start example .
+RUN wagtail start example
 
-RUN python manage.py migrate
-RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'password')" | python manage.py shell
-RUN python manage.py collectstatic --noinput
+RUN cd example && python manage.py migrate
+RUN cd example && echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'password')" | python manage.py shell
+RUN cd example && python manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["cd", "example", "&&", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "cd example && python manage.py runserver 0.0.0.0:8000"]
