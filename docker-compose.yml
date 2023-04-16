@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: wagtail
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  server:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: wagtail
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    image: destructive21/wagtail-dev:latest
+volumes:
+  db-data:
