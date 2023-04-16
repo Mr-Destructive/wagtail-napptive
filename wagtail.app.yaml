@@ -9,13 +9,13 @@ spec:
   components:
     - name: wagtail-dev
       type: webservice
-      ports:
-        - port: 8000
-          expose: true
       properties:
         image: destructive21/wagtail-dev:latest
+        ports:
+        - port: 8000
+          expose: true  
       traits:
-      - type: napptive-ingress # a napptive-ingress trait to get a public endpoint
+      - type: napptive-ingress
         properties:
           port: 8000
           path: /
